@@ -14,6 +14,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -29,7 +30,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/feed",
     icon: Home,
   },
   {
@@ -57,15 +58,21 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
+      <SidebarHeader>
+        <img src="/noroff-logo.png" alt="noroff logo" className="w-16 h-16" />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-base">Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a
+                      href={item.url}
+                      className="text-base text-muted-foreground"
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
