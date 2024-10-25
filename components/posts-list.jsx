@@ -1,8 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import postsAPI from "../lib/api/postAPI"; // Import the API handler
-import { Button } from "./ui/button";
+import postsAPI from "../lib/api/postAPI";
 import { Card } from "./ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import timeSince from "@/lib/utilities/getDate";
+import { Heart, MessageCircle } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
@@ -18,9 +21,9 @@ const PostsList = () => {
       setError(null); // Reset error state
       try {
         const data = await postsAPI.getPosts({ page, limit });
-        setPosts(data.data); // Use the data property for posts
-        console.log(data);
+        setPosts((prevPosts) => [...prevPosts, ...data.data]); // Append new posts
         setTotalPages(data.meta.pageCount); // Set total pages from meta
+        console.log(data.data);
       } catch (error) {
         console.error("Failed to fetch posts:", error);
         setError("Failed to fetch posts");
@@ -30,56 +33,78 @@ const PostsList = () => {
     };
 
     fetchPosts();
-  }, [page, limit]); // Fetch posts when page or limit changes
+  }, [page, limit]);
 
-  const handleNext = () => {
-    if (page < totalPages) setPage(page + 1);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 50 // Trigger near the bottom
+      ) {
+        if (page < totalPages && !loading) setPage((prevPage) => prevPage + 1);
+      }
+    };
 
-  const handlePrev = () => {
-    if (page > 1) setPage(page - 1);
-  };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [page, totalPages, loading]);
 
-  if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="max-w-[58rem] mx-auto border-x-2">
-      <div className="grid gap-4 px-0">
-        {posts.map((post) => (
-          <Card key={post.id} className="border-none p-4 shadow-md px-0">
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            {post.media?.url && (
+    <div className="max-w-[50rem] w-full mx-auto">
+      <div className="grid border-x-2">
+        {posts.map((post, index) => (
+          <Card
+            key={`${post.id}-${index}`} // Use a combination of id and index as key
+            className="border-b p-4 shadow-md flex flex-col gap-2 rounded-none"
+          >
+            <div className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage
+                  src={post.author.avatar.url}
+                  alt={post.author.avatar.media}
+                />
+                <AvatarFallback>A</AvatarFallback>
+              </Avatar>
+              <span>@{post.author.name}</span>
+              <p className="text-muted-foreground">{timeSince(post.created)}</p>
+            </div>
+
+            {post.media?.url ? (
               <img
                 src={post.media.url}
                 alt={post.media.alt}
-                className="w-[100%] aspect-square"
+                className="max-w-[100%] aspect-[4/3] object-cover rounded-lg border"
+              />
+            ) : (
+              <img
+                src="/placeholder.png"
+                alt="Placeholder"
+                className="w-[100%] aspect-[4/3] object-contain rounded-lg border"
               />
             )}
-            <p className="text-gray-500 text-sm">
-              Created: {new Date(post.created).toLocaleDateString()}
-            </p>
-            <p className="text-gray-500 text-sm">
-              Comments: {post._count.comments}
-            </p>
-            <p className="text-gray-500 text-sm">
-              Reactions: {post._count.reactions}
-            </p>
+            <div className="flex justify-between">
+              <h3>{post.title}</h3>
+              <div className="flex gap-3 items-center">
+                <p className="text-muted-foreground flex items-center gap-1">
+                  <Heart /> {post._count.comments}
+                </p>
+                <p className="text-muted-foreground flex items-center gap-1">
+                  <MessageCircle /> {post._count.reactions}
+                </p>
+              </div>
+            </div>
           </Card>
         ))}
       </div>
-      <div className="pagination-controls flex justify-between mt-4">
-        <Button onClick={handlePrev} disabled={page === 1}>
-          Prev
-        </Button>
-        <span>
-          Page {page} of {totalPages}
-        </span>
-        <Button onClick={handleNext} disabled={page === totalPages}>
-          Next
-        </Button>
-      </div>
+      {loading && (
+        <div className="grid gap-4 ">
+          {Array.from({ length: limit }).map((_, index) => (
+            <Skeleton key={index} className="w-[50rem] h-[30rem]" />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
