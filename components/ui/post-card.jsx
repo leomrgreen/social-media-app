@@ -4,7 +4,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import timeSince from "@/lib/utilities/getDate";
 import { Card } from "./card";
 
-const PostCard = ({ post, fullBorder = false, body = false }) => {
+const PostCard = ({
+  post,
+  fullBorder = false,
+  body = false,
+  singlePost = false,
+}) => {
   return (
     <Card
       key={post.id}
@@ -27,13 +32,19 @@ const PostCard = ({ post, fullBorder = false, body = false }) => {
         <img
           src={post.media.url}
           alt={post.media.alt}
-          className="max-w-[100%] aspect-[4/3] object-cover rounded-lg border"
+          className="max-w-[100%] aspect-[4/3] object-cover rounded-lg border cursor-pointer"
+          onClick={() => {
+            window.location.href = `/post/${post.id}`;
+          }}
         />
       ) : (
         <img
           src="/placeholder.png"
           alt="Placeholder"
-          className="w-[100%] aspect-[4/3] object-contain rounded-lg border"
+          className="w-[100%] aspect-[4/3] object-contain rounded-lg border cursor-pointer"
+          onClick={() => {
+            window.location.href = `/post/${post.id}`;
+          }}
         />
       )}
       <div className="flex justify-between">
@@ -48,7 +59,6 @@ const PostCard = ({ post, fullBorder = false, body = false }) => {
         </div>
       </div>
       {body && <p className="text-muted-foreground">{post.body}</p>}{" "}
-      {/* Conditional body rendering */}
     </Card>
   );
 };
