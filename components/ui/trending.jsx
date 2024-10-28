@@ -2,6 +2,7 @@ import ProfileAPI from "@/lib/api/profileAPI";
 import { BadgeCheck } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
+import { Skeleton } from "./skeleton";
 
 const TrendingUsers = () => {
   const api = new ProfileAPI();
@@ -39,7 +40,13 @@ const TrendingUsers = () => {
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="grid grid-cols-2 gap-2 py-5 px-2">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <Skeleton key={index} className="w-[full] h-[7rem]" />
+        ))}
+      </div>
+    );
   }
 
   return (
@@ -47,7 +54,7 @@ const TrendingUsers = () => {
       {users.map((user, idx) => (
         <li
           key={idx}
-          className="flex flex-col items-center justify-center bg-muted py-2 rounded-sm"
+          className="flex flex-col items-center justify-center bg-background hover:bg-muted transition-colors border py-2 rounded-sm"
         >
           <Avatar>
             <AvatarImage src={user.avatar.url} />

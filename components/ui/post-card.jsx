@@ -3,6 +3,7 @@ import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import timeSince from "@/lib/utilities/getDate";
 import { Card } from "./card";
+import LikeBtn from "../actions/like-btn";
 
 const PostCard = ({
   post,
@@ -15,7 +16,7 @@ const PostCard = ({
       key={post.id}
       className={`p-4 shadow-md flex flex-col gap-2 w-full max-w-[50rem] ${
         fullBorder ? "border" : "border-b"
-      } rounded-none`}
+      } ${!singlePost ? "rounded-none" : "rounded-md"}`}
     >
       <div className="flex items-center gap-3">
         <Avatar>
@@ -32,18 +33,22 @@ const PostCard = ({
         <img
           src={post.media.url}
           alt={post.media.alt}
-          className="max-w-[100%] aspect-[4/3] object-cover rounded-lg border cursor-pointer"
+          className={`max-w-[100%] aspect-[4/3] object-cover rounded-lg border ${
+            !singlePost ? "cursor-pointer" : "cursor-default"
+          }`}
           onClick={() => {
-            window.location.href = `/post/${post.id}`;
+            !singlePost ? (window.location.href = `/post/${post.id}`) : null;
           }}
         />
       ) : (
         <img
           src="/placeholder.png"
           alt="Placeholder"
-          className="w-[100%] aspect-[4/3] object-contain rounded-lg border cursor-pointer"
+          className={`max-w-[100%] aspect-[4/3] object-cover rounded-lg border ${
+            !singlePost ? "cursor-pointer" : "cursor-default"
+          }`}
           onClick={() => {
-            window.location.href = `/post/${post.id}`;
+            !singlePost ? (window.location.href = `/post/${post.id}`) : null;
           }}
         />
       )}
@@ -51,10 +56,11 @@ const PostCard = ({
         <h3>{post.title}</h3>
         <div className="flex gap-3 items-center">
           <p className="text-muted-foreground flex items-center gap-1">
-            <Heart /> {post._count.comments}
+            <LikeBtn postId={post.id} initialLikes={post.reactions} />{" "}
+            <span>{post._count.reactions}</span>
           </p>
           <p className="text-muted-foreground flex items-center gap-1">
-            <MessageCircle /> {post._count.reactions}
+            <MessageCircle /> {post._count.comments}
           </p>
         </div>
       </div>

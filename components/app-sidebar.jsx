@@ -38,8 +38,6 @@ const loggedInUser = storage.load("user");
 
 const items = [
   { title: "Home", url: "/feed", icon: Home },
-  { title: "Inbox", url: "#", icon: Inbox },
-  { title: "Calendar", url: "#", icon: Calendar },
   { title: "Search", url: "#", icon: Search },
   { title: "Settings", url: "#", icon: Settings },
 ];
@@ -73,18 +71,15 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-base">Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl">Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a
-                      href={item.url}
-                      className="text-base text-muted-foreground"
-                    >
+                    <a href={item.url} className="text-muted-foreground">
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className="text-lg">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

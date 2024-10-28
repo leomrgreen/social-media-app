@@ -41,7 +41,7 @@ const PostPage = () => {
   return (
     <div className="w-full">
       {post ? (
-        <PostCard post={post} body={true} fullBorder={true} /> // Render the PostCard component with the fetched post
+        <PostCard post={post} body={true} fullBorder={true} singlePost={true} />
       ) : (
         <div>No post found.</div>
       )}
