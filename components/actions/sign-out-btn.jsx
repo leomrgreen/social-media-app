@@ -11,7 +11,6 @@ const SignOutBtn = () => {
         api.profile.signOut();
       }}
       className="w-full"
-      variant="destructive"
     >
       Sign out
       <LogOut />

@@ -1,15 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProfileAPI from "@/lib/api/profileAPI";
-import {
-  Calendar,
-  ChevronUp,
-  Home,
-  Inbox,
-  Search,
-  Settings,
-  User,
-} from "lucide-react";
+import { Home, Search, Settings, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -22,24 +14,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as storage from "@/lib/utilities/storage";
 import SignOutBtn from "./actions/sign-out-btn";
-import Link from "next/link";
-import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import ModeToggle from "./theme/mode-toggle";
 
 const loggedInUser = storage.load("user");
 
 const items = [
   { title: "Home", url: "/feed", icon: Home },
+  { title: "Profile", url: "#", icon: User },
   { title: "Search", url: "#", icon: Search },
-  { title: "Settings", url: "#", icon: Settings },
 ];
 
 export function AppSidebar() {
@@ -49,7 +42,6 @@ export function AppSidebar() {
   useEffect(() => {
     const fetchProfile = async () => {
       if (loggedInUser && loggedInUser.name) {
-        // Check if loggedInUser exists and has a name
         setIsLoggedIn(true);
         try {
           const data = await new ProfileAPI().profile.read(loggedInUser.name);
@@ -67,23 +59,68 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <img src="/noroff-logo.png" alt="noroff logo" className="w-16 h-16" />
+        <div className="flex flex-col gap-2 p-2 justify-center py-5">
+          <span className="flex items-center">
+            {profileData && (
+              <>
+                <Avatar>
+                  <AvatarImage src={profileData.avatar.url} />
+                  <AvatarFallback>{null}</AvatarFallback>
+                </Avatar>
+                <div className="grid">
+                  <span>@{profileData.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {profileData.email}
+                  </span>
+                </div>
+              </>
+            )}
+          </span>
+        </div>
       </SidebarHeader>
+      <Separator />
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xl">Menu</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url} className="text-muted-foreground">
-                      <item.icon />
-                      <span className="text-lg">{item.title}</span>
-                    </a>
+            <SidebarMenu className="flex flex-col gap-5 mt-2">
+              <SidebarMenuButton>
+                <a
+                  href="/feed"
+                  className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
+                >
+                  <Home /> Home
+                </a>
+              </SidebarMenuButton>
+              <SidebarMenuButton>
+                <a
+                  href="/profile"
+                  className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
+                >
+                  <User /> Profile
+                </a>
+              </SidebarMenuButton>
+              <SidebarMenuButton>
+                <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
+                  <Search /> Search
+                </span>
+              </SidebarMenuButton>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <SidebarMenuButton>
+                    <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
+                      <Settings /> Appearance
+                    </span>
                   </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Appearance Settings</DialogTitle>
+                  </DialogHeader>
+                  <ModeToggle />
+                </DialogContent>
+              </Dialog>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -91,41 +128,7 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton className="h-auto flex gap-3">
-                  {profileData && (
-                    <>
-                      <Avatar>
-                        <AvatarImage src={profileData.avatar.url} />
-                        <AvatarFallback>{null}</AvatarFallback>
-                      </Avatar>
-                      <span>@{profileData.name}</span>
-                    </>
-                  )}
-                  <ChevronUp className="ml-auto" />
-                </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                side="top"
-                className="w-[--radix-popper-anchor-width]"
-              >
-                <DropdownMenuItem>
-                  <Button className="w-full">
-                    <Link
-                      href="/profile"
-                      className="w-full flex justify-center gap-2"
-                    >
-                      Account
-                      <User />
-                    </Link>
-                  </Button>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <SignOutBtn />
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <SignOutBtn />
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>

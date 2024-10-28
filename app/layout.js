@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import MobileNav from "@/components/ui/mobile-nav";
 import { SidebarRight } from "@/components/sidebar-right";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export const metadata = {
   title: "Social Media App",
@@ -11,16 +12,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="antialiased dark">
-        <SidebarProvider>
-          <AppSidebar />
-          <MobileNav />
-          <main className="min-h-screen flex flex-col items-center justify-center mx-auto">
-            {children}
-          </main>
-          <SidebarRight />
-        </SidebarProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarProvider>
+            <AppSidebar />
+            <MobileNav />
+            <main className="min-h-screen flex flex-col items-center justify-center mx-auto">
+              {children}
+            </main>
+            <SidebarRight />
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
