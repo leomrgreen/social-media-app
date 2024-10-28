@@ -1,9 +1,7 @@
+"use client";
 import * as React from "react";
 import { Plus } from "lucide-react";
 
-import { Calendars } from "@/components/calendars";
-import { DatePicker } from "@/components/date-picker";
-import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -14,61 +12,21 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar";
-
-// This is sample data.
-const data = {
-  user: {
-    name: "user",
-    email: "m@example.com",
-    avatar: "/placeholder.png",
-  },
-  users: {
-    name: "alvarez",
-    email: "test@gmail.com",
-    avatar: "/placeholder.png",
-  },
-};
-
-const users = [
-  {
-    name: "alvarez",
-    email: "test@gmail.com",
-    avatar: "/placeholder.png",
-  },
-  {
-    name: "alvarez",
-    email: "test@gmail.com",
-    avatar: "/placeholder.png",
-  },
-  {
-    name: "alvarez",
-    email: "test@gmail.com",
-    avatar: "/placeholder.png",
-  },
-];
+import TrendingUsers from "./ui/trending";
 
 export function SidebarRight({ ...props }) {
   return (
     <Sidebar
       collapsible="none"
-      className="sticky hidden lg:flex w-[25rem] top-0 h-svh border-l"
+      className="sticky hidden lg:flex lg:w-[25rem] w-[40%] top-0 h-svh border-l"
       {...props}
     >
-      <SidebarHeader className="h-16 border-b border-sidebar-border flex items-center justify-center">
+      <SidebarHeader className="h-16 border-b border-sidebar-border flex items-center  justify-center text-2xl">
         Popular users
       </SidebarHeader>
 
       <SidebarContent>
-        <div className="flex flex-wrap gap-3 px-2">
-          {users.map((user, idx) => {
-            return (
-              <li key={idx} className="flex flex-col items-center">
-                <span>@{user.name}</span>
-                <span className="text-sm">{user.email}</span>
-              </li>
-            );
-          })}
-        </div>
+        <TrendingUsers />
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>

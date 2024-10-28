@@ -8,6 +8,7 @@ import {
   Inbox,
   Search,
   Settings,
+  User,
 } from "lucide-react";
 import {
   Sidebar,
@@ -29,6 +30,9 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as storage from "@/lib/utilities/storage";
+import SignOutBtn from "./actions/sign-out-btn";
+import Link from "next/link";
+import { Button } from "./ui/button";
 
 const loggedInUser = storage.load("user");
 
@@ -94,14 +98,11 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
+                <SidebarMenuButton className="h-auto flex gap-3">
                   {profileData && (
                     <>
                       <Avatar>
-                        <AvatarImage
-                          src={profileData.avatar.url}
-                          className="border"
-                        />
+                        <AvatarImage src={profileData.avatar.url} />
                         <AvatarFallback>{null}</AvatarFallback>
                       </Avatar>
                       <span>@{profileData.name}</span>
@@ -115,10 +116,18 @@ export function AppSidebar() {
                 className="w-[--radix-popper-anchor-width]"
               >
                 <DropdownMenuItem>
-                  <span>Account</span>
+                  <Button className="w-full">
+                    <Link
+                      href="/profile"
+                      className="w-full flex justify-center gap-2"
+                    >
+                      Account
+                      <User />
+                    </Link>
+                  </Button>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <span>Sign out</span>
+                  <SignOutBtn />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
