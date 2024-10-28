@@ -3,6 +3,7 @@ import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import MobileNav from "@/components/ui/mobile-nav";
+import { SidebarRight } from "@/components/sidebar-right";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,13 +19,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} antialiased dark`}>
+      <body className={`${inter.variable} antialiased `}>
         <SidebarProvider>
           <AppSidebar />
           <MobileNav />
           <main className="min-h-screen flex flex-col items-center justify-center mx-auto">
             {children}
           </main>
+          <SidebarRight />
         </SidebarProvider>
       </body>
     </html>

@@ -6,8 +6,12 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
 
-const LoginForm = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+const RegisterForm = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const api = new NoroffAPI();
 
   const handleChange = (e) => {
@@ -21,18 +25,26 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
-      const response = await api.auth.login(formData);
-      console.log("Login successful:", response);
-      alert(`Login successful for ${response.data.name}`);
-      window.location.href = "/feed"; // redirect to feed after login
+      const response = await api.auth.register(formData);
+      console.log("Registration successful:", response);
+      alert(`Welcome, ${response.data.name}! Your account has been created.`);
     } catch (error) {
-      console.error("Login failed:", error);
-      alert(error.message || "Login failed, please try again.");
+      console.error("Registration failed:", error);
+      alert(error.message || "Registration failed, please try again.");
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="w-full">
+      <Label htmlFor="name">Your name</Label>
+      <Input
+        type="text"
+        name="name"
+        id="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Full Name"
+      />
       <Label htmlFor="email">Your email address</Label>
       <Input
         type="email"
@@ -51,9 +63,9 @@ const LoginForm = () => {
         onChange={handleChange}
         placeholder="Enter your password"
       />
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Register</Button>
     </form>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

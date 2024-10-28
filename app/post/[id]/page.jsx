@@ -39,7 +39,7 @@ const PostPage = () => {
   }
 
   return (
-    <div className="max-w-[50rem] w-full">
+    <div className="w-full">
       {post ? (
         <PostCard post={post} body={true} fullBorder={true} /> // Render the PostCard component with the fetched post
       ) : (

@@ -13,7 +13,7 @@ const PostCard = ({
   return (
     <Card
       key={post.id}
-      className={`p-4 shadow-md flex flex-col gap-2 ${
+      className={`p-4 shadow-md flex flex-col gap-2 w-full max-w-[50rem] ${
         fullBorder ? "border" : "border-b"
       } rounded-none`}
     >

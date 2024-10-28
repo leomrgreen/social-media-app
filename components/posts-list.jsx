@@ -50,7 +50,7 @@ const PostsList = () => {
 
   return (
     <div className="max-w-[50rem] w-full mx-auto">
-      <div className="grid border-x-2">
+      <div className="grid border-x">
         {posts.map((post, index) => (
           <PostCard key={`${post.id}-${index}`} post={post} />
         ))}

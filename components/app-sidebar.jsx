@@ -1,3 +1,6 @@
+"use client";
+import { useEffect, useState } from "react";
+import ProfileAPI from "@/lib/api/profileAPI";
 import {
   Calendar,
   ChevronUp,
@@ -6,7 +9,6 @@ import {
   Search,
   Settings,
 } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -25,37 +27,41 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import * as storage from "@/lib/utilities/storage";
 
-// Menu items.
+const loggedInUser = storage.load("user");
+
 const items = [
-  {
-    title: "Home",
-    url: "/feed",
-    icon: Home,
-  },
-  {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+  { title: "Home", url: "/feed", icon: Home },
+  { title: "Inbox", url: "#", icon: Inbox },
+  { title: "Calendar", url: "#", icon: Calendar },
+  { title: "Search", url: "#", icon: Search },
+  { title: "Settings", url: "#", icon: Settings },
 ];
 
 export function AppSidebar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (loggedInUser && loggedInUser.name) {
+        // Check if loggedInUser exists and has a name
+        setIsLoggedIn(true);
+        try {
+          const data = await new ProfileAPI().profile.read(loggedInUser.name);
+          setProfileData(data.data);
+        } catch (error) {
+          console.error("Failed to load profile data", error);
+        }
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  if (!isLoggedIn) return null;
+
   return (
     <Sidebar>
       <SidebarHeader>
@@ -89,7 +95,18 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  Username
+                  {profileData && (
+                    <>
+                      <Avatar>
+                        <AvatarImage
+                          src={profileData.avatar.url}
+                          className="border"
+                        />
+                        <AvatarFallback>{null}</AvatarFallback>
+                      </Avatar>
+                      <span>@{profileData.name}</span>
+                    </>
+                  )}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
