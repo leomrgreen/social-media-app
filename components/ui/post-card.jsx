@@ -19,14 +19,26 @@ const PostCard = ({
       } ${!singlePost ? "rounded-none" : "rounded-md"}`}
     >
       <div className="flex items-center gap-3">
-        <Avatar>
+        <Avatar
+          onClick={() => {
+            window.location.href = `/user/${post.author.name}`;
+          }}
+          className="cursor-pointer"
+        >
           <AvatarImage
             src={post.author.avatar.url}
             alt={post.author.avatar.media}
           />
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
-        <span>@{post.author.name}</span>
+        <span
+          className="cursor-pointer"
+          onClick={() => {
+            window.location.href = `/user/${post.author.name}`;
+          }}
+        >
+          @{post.author.name}
+        </span>
         <p className="text-muted-foreground">{timeSince(post.created)}</p>
       </div>
       {post.media?.url ? (

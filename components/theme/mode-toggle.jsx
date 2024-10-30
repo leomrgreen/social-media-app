@@ -13,7 +13,7 @@ const ModeToggle = () => {
         className="grid text-center gap-2 cursor-pointer hover:bg-muted py-2 rounded-lg transition-colors"
         onClick={() => setTheme("light")}
       >
-        <div className="aspect-[1/2] w-3/4 bg-muted bg-gray-100 rounded-lg mx-auto flex flex-col items-center justify-between border shadow-md">
+        <div className="aspect-[1/2] w-3/4 bg-gray-100 rounded-lg mx-auto flex flex-col items-center justify-between border shadow-md border-red-700 dark:border-border">
           <Sun className="mt-[50%] text-black" />
           <div className="grid gap-1 grid-cols-3 w-full">
             {Array.from({ length: 12 }).map((_, index) => (
@@ -29,7 +29,7 @@ const ModeToggle = () => {
         className="grid text-center gap-2 cursor-pointer hover:bg-muted py-2 rounded-lg transition-colors"
         onClick={() => setTheme("dark")}
       >
-        <div className="aspect-[1/2] w-3/4 bg-zinc-900 rounded-lg mx-auto flex flex-col items-center justify-between border shadow-md">
+        <div className="aspect-[1/2] w-3/4 bg-zinc-900 rounded-lg mx-auto flex flex-col items-center justify-between border shadow-md border-border dark:border-red-500">
           <Moon className="mt-[50%] text-white" />
           <div className="grid gap-1 grid-cols-3 w-full">
             {Array.from({ length: 12 }).map((_, index) => (

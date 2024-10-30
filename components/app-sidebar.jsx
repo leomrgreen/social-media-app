@@ -26,18 +26,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import ModeToggle from "./theme/mode-toggle";
+import { Skeleton } from "./ui/skeleton";
 
 const loggedInUser = storage.load("user");
-
-const items = [
-  { title: "Home", url: "/feed", icon: Home },
-  { title: "Profile", url: "#", icon: User },
-  { title: "Search", url: "#", icon: Search },
-];
 
 export function AppSidebar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -46,8 +42,10 @@ export function AppSidebar() {
         try {
           const data = await new ProfileAPI().profile.read(loggedInUser.name);
           setProfileData(data.data);
+          setIsLoading(false);
         } catch (error) {
           console.error("Failed to load profile data", error);
+          setIsLoading(false);
         }
       }
     };
@@ -61,19 +59,31 @@ export function AppSidebar() {
       <SidebarHeader>
         <div className="flex flex-col gap-2 p-2 justify-center py-5">
           <span className="flex items-center">
-            {profileData && (
-              <>
-                <Avatar>
-                  <AvatarImage src={profileData.avatar.url} />
-                  <AvatarFallback>{null}</AvatarFallback>
-                </Avatar>
-                <div className="grid">
-                  <span>@{profileData.name}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {profileData.email}
-                  </span>
+            {isLoading ? (
+              <div className="flex items-center justify-between">
+                <Skeleton className="w-[3.2rem] h-[3.2rem] rounded-full  items-center" />
+                <div className="flex flex-col gap-2 justify-center">
+                  <Skeleton className="w-[10rem] h-3 rounded-md" />
+                  <Skeleton className="w-[8rem] h-3 rounded-md" />
                 </div>
-              </>
+              </div>
+            ) : (
+              profileData && (
+                <>
+                  <Avatar>
+                    <AvatarImage src={profileData.avatar.url} />
+                    <AvatarFallback>
+                      {profileData.name.charAt(0)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid">
+                    <span>@{profileData.name}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {profileData.email}
+                    </span>
+                  </div>
+                </>
+              )
             )}
           </span>
         </div>
@@ -116,7 +126,7 @@ export function AppSidebar() {
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
-                    <DialogTitle>Appearance Settings</DialogTitle>
+                    <DialogTitle>Theme settings</DialogTitle>
                   </DialogHeader>
                   <ModeToggle />
                 </DialogContent>

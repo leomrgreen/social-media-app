@@ -3,6 +3,7 @@ import { BadgeCheck } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Skeleton } from "./skeleton";
+import FollowBtn from "../actions/follow-btn";
 
 const TrendingUsers = () => {
   const api = new ProfileAPI();
@@ -50,25 +51,28 @@ const TrendingUsers = () => {
   }
 
   return (
-    <ul className="grid grid-cols-2 gap-2 py-5 px-2">
+    <ul className="grid xl:grid-cols-2 gap-2 py-5 px-2">
       {users.map((user, idx) => (
         <li
           key={idx}
-          className="flex flex-col items-center justify-center bg-background hover:bg-muted transition-colors border py-2 rounded-sm"
+          className="flex flex-col items-center justify-center bg-background border py-2 rounded-sm"
         >
-          <Avatar>
-            <AvatarImage src={user.avatar.url} />
-            <AvatarFallback>L</AvatarFallback>
-          </Avatar>
-          <div className="flex gap-2 items-center">
-            <span>@{user.name}</span>{" "}
-            <span className="text-blue-500">
-              <BadgeCheck />
-            </span>
-          </div>
+          <a href={`/user/${user.name}`} className="flex flex-col items-center">
+            <Avatar>
+              <AvatarImage src={user.avatar.url} />
+              <AvatarFallback>L</AvatarFallback>
+            </Avatar>
+            <div className="flex gap-2 items-center">
+              <span>@{user.name}</span>{" "}
+              <span className="text-blue-500">
+                <BadgeCheck />
+              </span>
+            </div>
+          </a>
           <span className="text-muted-foreground">
             {user._count.followers} followers
           </span>
+          <FollowBtn profile={user} />
         </li>
       ))}
     </ul>
