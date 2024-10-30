@@ -51,13 +51,16 @@ const TrendingUsers = () => {
   }
 
   return (
-    <ul className="grid xl:grid-cols-2 gap-2 py-5 px-2">
+    <ul className="grid xl:grid-cols-2 gap-2 py-5 px-2 overflow-x-hidden">
       {users.map((user, idx) => (
         <li
           key={idx}
           className="flex flex-col items-center justify-center bg-background border py-2 rounded-sm"
         >
-          <a href={`/user/${user.name}`} className="flex flex-col items-center">
+          <a
+            href={`/user/${user.name}`}
+            className="flex flex-col items-center text-sm break-words"
+          >
             <Avatar>
               <AvatarImage src={user.avatar.url} />
               <AvatarFallback>L</AvatarFallback>

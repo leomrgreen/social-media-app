@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ProfileAPI from "@/lib/api/profileAPI";
 import UserProfileCard from "@/components/ui/user-profile-card";
+import { FaCameraRetro } from "react-icons/fa";
 import UserPostCard from "@/components/ui/user-post-card";
 import { Card } from "@/components/ui/card";
 
@@ -31,11 +32,14 @@ const Userpage = () => {
         <UserProfileCard username={username} />
       </section>
       <section className="max-w-[70rem] w-full mx-auto px-5">
-        <div className="grid grid-cols-3 gap-1">
+        <div className="grid grid-cols-3 gap-1 pt-5">
           {posts.length > 0 ? (
             posts.map((post) => <UserPostCard key={post.id} post={post} />)
           ) : (
-            <Card className="p-5">No posts available</Card>
+            <Card className="p-5 col-span-3 text-center">
+              No posts available
+              <FaCameraRetro className="w-1/2 h-auto mx-auto text-muted-foreground" />
+            </Card>
           )}
         </div>
       </section>

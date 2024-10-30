@@ -111,3 +111,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.plus-sign {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
