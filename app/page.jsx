@@ -18,7 +18,7 @@ export default function Home() {
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col justify-center w-full max-w-[50rem] space-y-4">
+    <div className="min-h-screen flex flex-col justify-center w-full max-w-[50rem] space-y-4 mx-auto">
       <h1 className="text-5xl text-start">
         Welcome to Noroff's official social media platform
       </h1>

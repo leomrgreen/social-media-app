@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { Plus } from "lucide-react";
+import * as storage from "@/lib/utilities/storage";
 
 import {
   Sidebar,
@@ -10,11 +11,30 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import TrendingUsers from "./ui/trending";
 
 export function SidebarRight({ ...props }) {
+  const [isUser, setIsUser] = React.useState(false);
+
+  React.useEffect(() => {
+    const user = storage.load("user");
+    setIsUser(!!user); // Update state based on user existence
+
+    // Optional: listen to storage changes if user logs in/out in another tab
+    const handleStorageChange = () => {
+      const updatedUser = storage.load("user");
+      setIsUser(!!updatedUser);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  if (!isUser) return null;
+
   return (
     <Sidebar
       collapsible="none"
@@ -33,7 +53,7 @@ export function SidebarRight({ ...props }) {
           <SidebarMenuItem>
             <SidebarMenuButton>
               <Plus />
-              <a href="/post/upload" className="w-full">
+              <a href="/post/upload" className="w-full lg:flex hidden">
                 Upload post
               </a>
             </SidebarMenuButton>

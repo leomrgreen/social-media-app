@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProfileAPI from "@/lib/api/profileAPI";
-import { Home, Search, Settings, User } from "lucide-react";
+import { Home, Plus, Search, Settings, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -131,6 +131,14 @@ export function AppSidebar() {
                   <ModeToggle />
                 </DialogContent>
               </Dialog>
+              <SidebarMenuButton>
+                <a
+                  href="/post/upload"
+                  className="lg:hidden w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
+                >
+                  <Plus /> Upload post
+                </a>
+              </SidebarMenuButton>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

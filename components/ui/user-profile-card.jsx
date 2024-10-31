@@ -63,7 +63,7 @@ const UserProfileCard = ({ username }) => {
           )}
         </span>
       </CardHeader>
-      <CardContent className="flex justify-center">
+      <CardContent className="flex text-muted-foreground">
         {profileData.bio}
       </CardContent>
     </Card>

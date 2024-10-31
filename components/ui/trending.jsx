@@ -1,9 +1,9 @@
 import ProfileAPI from "@/lib/api/profileAPI";
-import { BadgeCheck } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Skeleton } from "./skeleton";
 import FollowBtn from "../actions/follow-btn";
+import { Verified } from "lucide-react";
 
 const TrendingUsers = () => {
   const api = new ProfileAPI();
@@ -63,7 +63,7 @@ const TrendingUsers = () => {
             <div className="flex gap-2 items-center">
               <span>@{user.name}</span>{" "}
               <span className="text-blue-500">
-                <BadgeCheck />
+                <Verified className="text-sm w-4 h-4" />
               </span>
             </div>
           </a>
