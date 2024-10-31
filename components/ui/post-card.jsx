@@ -10,6 +10,7 @@ const PostCard = ({
   fullBorder = false,
   body = false,
   singlePost = false,
+  tags = false,
 }) => {
   return (
     <Card
@@ -77,6 +78,15 @@ const PostCard = ({
         </div>
       </div>
       {body && <p className="text-muted-foreground">{post.body}</p>}{" "}
+      <ul className="flex gap-2 items-center">
+        {post.tags.map((tag, idx) => {
+          return (
+            <li key={idx} className={`${tags ? "flex" : "hidden"} list-none`}>
+              #{tag}
+            </li>
+          );
+        })}
+      </ul>
     </Card>
   );
 };

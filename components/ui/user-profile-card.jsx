@@ -5,24 +5,29 @@ import ProfileAPI from "@/lib/api/profileAPI";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import FollowBtn from "../actions/follow-btn";
+import { Skeleton } from "./skeleton";
 
 const UserProfileCard = ({ username }) => {
   const [profileData, setProfileData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+        setIsLoading(true);
         const data = await new ProfileAPI().profile.read(username);
         setProfileData(data.data);
       } catch (error) {
         console.error("Failed to load profile data", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchProfile();
   }, [username]);
 
-  if (!profileData) return <div>Loading...</div>;
+  if (isLoading) return <Skeleton className="w-3/4 h-[12rem] mx-auto" />;
 
   return (
     <Card className="w-full max-w-[35rem] mx-auto  border grid">
@@ -32,7 +37,7 @@ const UserProfileCard = ({ username }) => {
             <AvatarImage src={profileData.avatar.url} />
             <AvatarFallback>{profileData.name[0]}</AvatarFallback>
           </Avatar>
-          <CardTitle>@{profileData.name}</CardTitle>
+          <span>@{profileData.name}</span>
         </span>
 
         <span className="flex flex-col gap-2">

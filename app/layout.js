@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
         >
           <SidebarProvider>
             <AppSidebar />
-            <MobileNav />
+            {/* <MobileNav /> */}
             <main className="min-h-screen flex flex-col mx-auto w-full">
               {children}
             </main>

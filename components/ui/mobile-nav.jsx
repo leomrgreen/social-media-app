@@ -8,6 +8,9 @@ import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 const MobileNav = () => {
   const loggedInUser = storage.load("user");
   console.log(loggedInUser);
+  if (!loggedInUser) {
+    return null;
+  }
 
   return (
     <>

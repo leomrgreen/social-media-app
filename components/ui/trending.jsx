@@ -19,12 +19,7 @@ const TrendingUsers = () => {
 
         if (data.data && Array.isArray(data.data)) {
           const sortedUsers = data.data
-            .filter(
-              (user) => user._count && typeof user._count.followers === "number"
-            ) // Filter users with valid follower count
-            .sort(
-              (a, b) => (b._count.followers || 0) - (a._count.followers || 0)
-            ) // Sort by followers in descending order
+            .sort((a, b) => b._count.followers - a._count.followers) // Sort by followers in descending order
             .slice(0, 10); // Get only the top 10
 
           setUsers(sortedUsers);

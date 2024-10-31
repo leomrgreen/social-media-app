@@ -39,9 +39,15 @@ const PostPage = () => {
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full flex items-center justify-center">
       {post ? (
-        <PostCard post={post} body={true} fullBorder={true} singlePost={true} />
+        <PostCard
+          post={post}
+          body={true}
+          fullBorder={true}
+          singlePost={true}
+          tags={true}
+        />
       ) : (
         <div>No post found.</div>
       )}
