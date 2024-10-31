@@ -1,7 +1,6 @@
 import "./globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
-import MobileNav from "@/components/ui/mobile-nav";
 import { SidebarRight } from "@/components/sidebar-right";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 

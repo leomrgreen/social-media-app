@@ -3,13 +3,17 @@
 import React, { useEffect, useState } from "react";
 import ProfileAPI from "@/lib/api/profileAPI";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import FollowBtn from "../actions/follow-btn";
 import { Skeleton } from "./skeleton";
+import * as storage from "@/lib/utilities/storage";
+import EditBtn from "../actions/edit.btn";
 
 const UserProfileCard = ({ username }) => {
   const [profileData, setProfileData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const loggedInUser = storage.load("user");
+  const loggedInUserName = loggedInUser?.name;
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -30,7 +34,7 @@ const UserProfileCard = ({ username }) => {
   if (isLoading) return <Skeleton className="w-3/4 h-[12rem] mx-auto" />;
 
   return (
-    <Card className="w-full max-w-[35rem] mx-auto  border grid">
+    <Card className="w-full max-w-[35rem] mx-auto border grid">
       <CardHeader className="flex flex-col sm:flex-row justify-around mx-auto items-center gap-5 w-full">
         <span className="flex flex-col items-center">
           <Avatar>
@@ -52,7 +56,11 @@ const UserProfileCard = ({ username }) => {
               {profileData.following.length} Following
             </p>
           </div>
-          <FollowBtn profile={profileData} />
+          {loggedInUserName === profileData.name ? (
+            <EditBtn /> // Show edit button if the logged-in user is the profile owner
+          ) : (
+            <FollowBtn profile={profileData} /> // Otherwise, show follow button
+          )}
         </span>
       </CardHeader>
       <CardContent className="flex justify-center">

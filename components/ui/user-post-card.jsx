@@ -18,6 +18,9 @@ const UserPostCard = ({ post }) => (
         src="/placeholder.png"
         alt="placeholder image"
         className="aspect-square object-cover border"
+        onClick={() => {
+          window.location.href = `/post/${post.id}`;
+        }}
       />
     )}
   </Card>

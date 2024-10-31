@@ -1,9 +1,13 @@
-import { Heart, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import timeSince from "@/lib/utilities/getDate";
 import { Card } from "./card";
 import LikeBtn from "../actions/like-btn";
+import * as storage from "@/lib/utilities/storage";
+
+const loggedInUser = storage.load("user");
+const userName = loggedInUser?.name;
 
 const PostCard = ({
   post,
@@ -12,6 +16,15 @@ const PostCard = ({
   singlePost = false,
   tags = false,
 }) => {
+  const handleUserClick = () => {
+    // Only navigate if userName is defined
+    const targetUrl =
+      userName && userName === post.author.name
+        ? "/profile"
+        : `/user/${post.author.name}`;
+    window.location.href = targetUrl;
+  };
+
   return (
     <Card
       key={post.id}
@@ -20,24 +33,14 @@ const PostCard = ({
       } ${!singlePost ? "rounded-none" : "rounded-md"}`}
     >
       <div className="flex items-center gap-3">
-        <Avatar
-          onClick={() => {
-            window.location.href = `/user/${post.author.name}`;
-          }}
-          className="cursor-pointer"
-        >
+        <Avatar onClick={handleUserClick} className="cursor-pointer">
           <AvatarImage
             src={post.author.avatar.url}
             alt={post.author.avatar.media}
           />
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
-        <span
-          className="cursor-pointer"
-          onClick={() => {
-            window.location.href = `/user/${post.author.name}`;
-          }}
-        >
+        <span className="cursor-pointer" onClick={handleUserClick}>
           @{post.author.name}
         </span>
         <p className="text-muted-foreground">{timeSince(post.created)}</p>
@@ -50,7 +53,9 @@ const PostCard = ({
             !singlePost ? "cursor-pointer" : "cursor-default"
           }`}
           onClick={() => {
-            !singlePost ? (window.location.href = `/post/${post.id}`) : null;
+            if (!singlePost) {
+              window.location.href = `/post/${post.id}`;
+            }
           }}
         />
       ) : (
@@ -61,7 +66,9 @@ const PostCard = ({
             !singlePost ? "cursor-pointer" : "cursor-default"
           }`}
           onClick={() => {
-            !singlePost ? (window.location.href = `/post/${post.id}`) : null;
+            if (!singlePost) {
+              window.location.href = `/post/${post.id}`;
+            }
           }}
         />
       )}
@@ -77,15 +84,13 @@ const PostCard = ({
           </p>
         </div>
       </div>
-      {body && <p className="text-muted-foreground">{post.body}</p>}{" "}
+      {body && <p className="text-muted-foreground">{post.body}</p>}
       <ul className="flex gap-2 items-center">
-        {post.tags.map((tag, idx) => {
-          return (
-            <li key={idx} className={`${tags ? "flex" : "hidden"} list-none`}>
-              #{tag}
-            </li>
-          );
-        })}
+        {post.tags.map((tag, idx) => (
+          <li key={idx} className={`${tags ? "flex" : "hidden"} list-none`}>
+            #{tag}
+          </li>
+        ))}
       </ul>
     </Card>
   );
