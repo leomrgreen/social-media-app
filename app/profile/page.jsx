@@ -43,7 +43,9 @@ const Profilepage = () => {
         ) : (
           <div className="grid grid-cols-3 gap-1 pt-5">
             {posts.length > 0 ? (
-              posts.map((post) => <UserPostCard key={post.id} post={post} />)
+              posts.map((post) => (
+                <UserPostCard key={post.id} post={post} owner={true} />
+              ))
             ) : (
               <Card className="p-5 col-span-3 text-center">
                 No posts available

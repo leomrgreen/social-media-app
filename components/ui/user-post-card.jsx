@@ -1,7 +1,10 @@
 import React from "react";
 import { Card } from "@/components/ui/card";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import EditPostBtn from "../actions/edit-post-btn";
+import DeleteBtn from "../actions/delete-btn";
 
-const UserPostCard = ({ post }) => (
+const UserPostCard = ({ post, owner = false }) => (
   <Card className="w-full relative cursor-pointer rounded-none ">
     {post.media && (
       <img
@@ -22,6 +25,12 @@ const UserPostCard = ({ post }) => (
           window.location.href = `/post/${post.id}`;
         }}
       />
+    )}
+    {owner && (
+      <>
+        <EditPostBtn id={post.id} />
+        <DeleteBtn postId={post.id} />
+      </>
     )}
   </Card>
 );
