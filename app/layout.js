@@ -3,6 +3,7 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarRight } from "@/components/sidebar-right";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import MobileNav from "@/components/ui/mobile-nav";
 
 export const metadata = {
   title: "Social Media App",
@@ -21,12 +22,12 @@ export default function RootLayout({ children }) {
         >
           <SidebarProvider>
             <AppSidebar />
-            {/* <MobileNav /> */}
             <main className="min-h-screen flex flex-col mx-auto w-full">
               {children}
             </main>
             <SidebarRight />
           </SidebarProvider>
+          <MobileNav />
         </ThemeProvider>
       </body>
     </html>

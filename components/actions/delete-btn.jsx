@@ -26,7 +26,10 @@ const DeleteBtn = ({ postId }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" className="absolute top-0 left-0">
+        <Button
+          variant="ghost"
+          className="absolute top-0 left-0 text-destructive"
+        >
           <BsTrash />
         </Button>
       </AlertDialogTrigger>

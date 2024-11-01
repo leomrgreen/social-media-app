@@ -9,7 +9,9 @@ import { Button } from "./ui/button";
 
 const CreatePostForm = () => {
   return (
-    <Card className="p-6 max-w-[50rem] mx-auto">
+    <Card className="p-6 max-w-[50rem] mx-auto w-full">
+      <h1 className="text-5xl pb-10">Upload post</h1>
+
       <form onSubmit={onCreatePost} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <Label htmlFor="title">Title</Label>
@@ -17,23 +19,28 @@ const CreatePostForm = () => {
             type="text"
             id="title"
             name="title"
-            placeholder="Title"
+            placeholder="What's happening?"
             required
           />
         </div>
 
         <div className="flex flex-col gap-1">
           <Label htmlFor="body">Body</Label>
-          <Textarea id="body" name="body" placeholder="Body" rows="5" />
+          <Textarea
+            id="body"
+            name="body"
+            placeholder="Tell us more about this post"
+            rows="5"
+          />
         </div>
 
         <div className="flex flex-col gap-1">
-          <Label htmlFor="tags">Tags</Label>
+          <Label htmlFor="tags">Add tags (space or comma separated)</Label>
           <Input
             type="text"
             id="tags"
             name="tags"
-            placeholder="Tags (space or comma separated)"
+            placeholder="Travel, Food, Gaming"
           />
         </div>
 

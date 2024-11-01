@@ -1,52 +1,70 @@
-"use client";
 import { Home, LogOut, Plus, Search, Settings, User } from "lucide-react";
 import React from "react";
-import * as storage from "@/lib/utilities/storage";
-import { Avatar } from "./avatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { Separator } from "./separator";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
+import ModeToggle from "../theme/mode-toggle";
+import SignOutBtn from "../actions/sign-out-btn";
 
 const MobileNav = () => {
-  const loggedInUser = storage.load("user");
-  console.log(loggedInUser);
-  if (!loggedInUser) {
-    return null;
-  }
-
   return (
     <>
-      <div className="fixed w-full top-0 z-50 bg-background/20 backdrop-blur-sm sm:hidden p-2 flex justify-between items-center px-5">
-        <Avatar>
-          <AvatarImage src={loggedInUser.avatar.url} />
-          <AvatarFallback>L</AvatarFallback>
-        </Avatar>
+      <div className="fixed w-full top-0 z-50  sm:hidden p-2 flex justify-end items-center px-5">
         <Search />
       </div>
-      <nav className="fixed w-full p-3 bg-background/60 backdrop-blur-sm sm:hidden flex justify-around bottom-0 border shadow-sm z-50">
-        <ul className="flex  items-center justify-between px-2 relative w-full">
-          <span className="flex gap-3">
-            <li className="flex flex-col items-center text-xs">
+      <nav className="fixed w-full p-3 bg-background sm:hidden flex bottom-0 border shadow-sm z-50">
+        <ul className="flex  justify-center gap-5 items-center px-2  w-full">
+          <li className="flex flex-col items-center text-xs">
+            <a href="/feed">
               <Home />
-              <span className="text-muted-foreground">Home</span>
-            </li>
-            <li className="flex flex-col items-center text-xs">
-              <User />
-              <span className="text-muted-foreground">Profile</span>
-            </li>
-          </span>
-          <li className="flex flex-col items-center text-xs plus-sign">
-            <Plus />
-            <span className="text-muted-foreground">Upload</span>
+              <span className="text-muted-foreground sr-only">Home</span>
+            </a>
           </li>
-          <span className="flex gap-3">
-            <li className="flex flex-col items-center text-xs">
-              <Settings />
-              <span className="text-muted-foreground">Appearance</span>
-            </li>
-            <li className="flex flex-col items-center text-xs">
-              <LogOut />
-              <span className="text-muted-foreground">Sign out</span>
-            </li>
-          </span>
+          <Separator orientation="vertical" />
+
+          <li className="flex flex-col items-center text-xs">
+            <a href="/profile">
+              <User />
+              <span className="text-muted-foreground sr-only">Profile</span>
+            </a>
+          </li>
+          <Separator orientation="vertical" />
+
+          <li className="flex flex-col items-center text-xs">
+            <a href="/post/upload">
+              <Plus />
+              <span className="text-muted-foreground sr-only">Upload</span>
+            </a>
+          </li>
+          <Separator orientation="vertical" />
+
+          <Dialog>
+            <DialogTrigger asChild>
+              <li className="flex flex-col items-center text-xs">
+                <Settings />
+                <span className="text-muted-foreground sr-only">
+                  Appearance
+                </span>
+              </li>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Theme settings</DialogTitle>
+              </DialogHeader>
+              <ModeToggle />
+            </DialogContent>
+          </Dialog>
+          <Separator orientation="vertical" />
+
+          <li className="flex flex-col items-center text-xs">
+            <SignOutBtn />
+            <span className="text-muted-foreground sr-only">Sign out</span>
+          </li>
         </ul>
       </nav>
     </>

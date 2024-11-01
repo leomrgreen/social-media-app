@@ -6,15 +6,25 @@ const api = new ProfileAPI();
 
 const SignOutBtn = () => {
   return (
-    <Button
-      onClick={() => {
-        api.profile.signOut();
-      }}
-      className="w-full"
-    >
-      Sign out
-      <LogOut />
-    </Button>
+    <>
+      <Button
+        onClick={() => {
+          api.profile.signOut();
+        }}
+        className="w-full hidden sm:flex"
+      >
+        Sign out
+        <LogOut />
+      </Button>
+      <span
+        className="sm:hidden"
+        onClick={() => {
+          api.profile.signOut();
+        }}
+      >
+        <LogOut />
+      </span>
+    </>
   );
 };
 
