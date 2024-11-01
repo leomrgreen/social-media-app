@@ -35,7 +35,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
+    <form onSubmit={handleSubmit} className="w-full grid gap-3">
       <Label htmlFor="name">Your name</Label>
       <Input
         type="text"

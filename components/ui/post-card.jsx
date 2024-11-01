@@ -1,4 +1,4 @@
-import { MessageCircle } from "lucide-react";
+import { MessageCircle, Verified } from "lucide-react";
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import timeSince from "@/lib/utilities/getDate";
@@ -42,6 +42,8 @@ const PostCard = ({
         </Avatar>
         <span className="cursor-pointer" onClick={handleUserClick}>
           @{post.author.name}
+          {/* add verified badge if API gets updated */}
+          {/* {post.author._count.followers.length > 5 && <Verified />} */}
         </span>
         <p className="text-muted-foreground">{timeSince(post.created)}</p>
       </div>

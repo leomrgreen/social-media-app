@@ -17,7 +17,7 @@ const ModeToggle = () => {
           <Sun className="mt-[50%] text-black" />
           <div className="grid gap-1 grid-cols-3 w-full">
             {Array.from({ length: 12 }).map((_, index) => (
-              <div key={index} className="bg-gray-300 w-full h-11" />
+              <div key={index} className="bg-gray-300 w-full h-11 rounded-md" />
             ))}
           </div>
         </div>
@@ -33,7 +33,7 @@ const ModeToggle = () => {
           <Moon className="mt-[50%] text-white" />
           <div className="grid gap-1 grid-cols-3 w-full">
             {Array.from({ length: 12 }).map((_, index) => (
-              <div key={index} className="bg-zinc-950 w-full h-11" />
+              <div key={index} className="bg-zinc-950 w-full h-11 rounded-md" />
             ))}
           </div>
         </div>

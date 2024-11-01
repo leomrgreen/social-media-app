@@ -32,7 +32,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full">
+    <form onSubmit={handleSubmit} className="w-full grid gap-3">
       <Label htmlFor="email">Your email address</Label>
       <Input
         type="email"
@@ -51,7 +51,7 @@ const LoginForm = () => {
         onChange={handleChange}
         placeholder="Enter your password"
       />
-      <Button type="submit">Submit</Button>
+      <Button type="submit">Login</Button>
     </form>
   );
 };

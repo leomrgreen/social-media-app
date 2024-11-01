@@ -46,7 +46,7 @@ const TrendingUsers = () => {
   }
 
   return (
-    <ul className="grid xl:grid-cols-2 gap-2 py-5 px-2 overflow-x-hidden">
+    <ul className="grid grid-cols-2 gap-2 py-5 px-2 overflow-x-hidden">
       {users.map((user, idx) => (
         <li
           key={idx}

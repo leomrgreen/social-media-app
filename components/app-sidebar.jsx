@@ -131,7 +131,7 @@ export function AppSidebar() {
                   <ModeToggle />
                 </DialogContent>
               </Dialog>
-              <SidebarMenuButton>
+              <SidebarMenuButton className="lg:hidden">
                 <a
                   href="/post/upload"
                   className="lg:hidden w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"

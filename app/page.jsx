@@ -44,7 +44,11 @@ export default function Home() {
       {/* Button to open Login Dialog */}
       <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
         <DialogTrigger asChild>
-          <Button className="w-full" onClick={() => setIsLoginOpen(true)}>
+          <Button
+            variant="outline"
+            className="w-full"
+            onClick={() => setIsLoginOpen(true)}
+          >
             Login
           </Button>
         </DialogTrigger>
