@@ -117,3 +117,9 @@ body {
   left: 50%;
   transform: translateX(-50%);
 }
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+}

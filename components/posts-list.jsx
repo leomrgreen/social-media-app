@@ -67,7 +67,7 @@ const PostsList = () => {
       <div className="flex justify-center sticky top-0 z-50">
         <button
           onClick={toggleFollowing}
-          className="flex items-center gap-3 text-3xl lg:text-5xl bg-background w-full justify-center p-3 border-b "
+          className="flex items-center gap-3 text-xl lg:text-3xl  bg-background w-full justify-center p-3 border-b "
         >
           <span
             className={`${
