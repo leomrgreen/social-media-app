@@ -2,8 +2,8 @@ import ProfileAPI from "@/lib/api/profileAPI";
 import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Skeleton } from "./skeleton";
-import FollowBtn from "../actions/follow-btn";
 import { Verified } from "lucide-react";
+import { GrLinkNext } from "react-icons/gr";
 
 const TrendingUsers = () => {
   const api = new ProfileAPI();
@@ -52,10 +52,7 @@ const TrendingUsers = () => {
           key={idx}
           className="flex flex-col items-center justify-center bg-background border py-2 rounded-sm"
         >
-          <a
-            href={`/user/${user.name}`}
-            className="flex flex-col items-center text-sm break-words"
-          >
+          <span className="flex flex-col items-center text-sm break-words">
             <Avatar>
               <AvatarImage src={user.avatar.url} />
               <AvatarFallback>L</AvatarFallback>
@@ -66,11 +63,17 @@ const TrendingUsers = () => {
                 <Verified className="text-sm w-4 h-4" />
               </span>
             </div>
-          </a>
+          </span>
           <span className="text-muted-foreground">
             {user._count.followers} followers
           </span>
-          <FollowBtn profile={user} />
+          <a
+            href={`/user/${user.name}`}
+            className="bg-background border w-1/2 rounded-md font-semibold flex justify-center items-center hover:gap-3 transition-all gap-2 py-1"
+          >
+            Visit
+            <GrLinkNext className="-rotate-45" />
+          </a>
         </li>
       ))}
     </ul>

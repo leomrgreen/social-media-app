@@ -16,9 +16,8 @@ const UserProfileCard = ({ username }) => {
   const loggedInUser = storage.load("user");
   const loggedInUserName = loggedInUser?.name;
 
-  // Modal state for followers/following
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState("followers"); // "followers" or "following"
+  const [modalType, setModalType] = useState("followers");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -39,6 +38,19 @@ const UserProfileCard = ({ username }) => {
   const openModal = (type) => {
     setModalType(type);
     setIsModalOpen(true);
+  };
+
+  const handleFollowChange = (delta) => {
+    // Update follower count based on the delta (+1 or -1)
+    setProfileData((prev) => ({
+      ...prev,
+      followers:
+        delta > 0
+          ? [...prev.followers, { name: loggedInUserName }]
+          : prev.followers.filter(
+              (follower) => follower.name !== loggedInUserName
+            ),
+    }));
   };
 
   if (isLoading) return <Skeleton className="w-3/4 h-[12rem] mx-auto" />;
@@ -74,9 +86,12 @@ const UserProfileCard = ({ username }) => {
               </button>
             </div>
             {loggedInUserName === profileData.name ? (
-              <EditBtn /> // Show edit button if the logged-in user is the profile owner
+              <EditBtn />
             ) : (
-              <FollowBtn profile={profileData} /> // Otherwise, show follow button
+              <FollowBtn
+                profile={profileData}
+                onFollowChange={handleFollowChange}
+              />
             )}
           </span>
         </CardHeader>
@@ -85,7 +100,6 @@ const UserProfileCard = ({ username }) => {
         </CardContent>
       </Card>
 
-      {/* Modal for Followers/Following */}
       <ProfileListModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

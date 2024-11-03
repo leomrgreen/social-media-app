@@ -13,6 +13,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSkeleton,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import * as storage from "@/lib/utilities/storage";
@@ -42,9 +43,9 @@ export function AppSidebar() {
         try {
           const data = await new ProfileAPI().profile.read(loggedInUser.name);
           setProfileData(data.data);
-          setIsLoading(false);
         } catch (error) {
           console.error("Failed to load profile data", error);
+        } finally {
           setIsLoading(false);
         }
       }
@@ -95,50 +96,63 @@ export function AppSidebar() {
           <SidebarGroupLabel className="text-xl">Menu</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="flex flex-col gap-5 mt-2">
-              <SidebarMenuButton>
-                <a
-                  href="/feed"
-                  className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
-                >
-                  <Home /> Home
-                </a>
-              </SidebarMenuButton>
-              <SidebarMenuButton>
-                <a
-                  href="/profile"
-                  className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
-                >
-                  <User /> Profile
-                </a>
-              </SidebarMenuButton>
-              <SidebarMenuButton>
-                <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
-                  <Search /> Search
-                </span>
-              </SidebarMenuButton>
-              <Dialog>
-                <DialogTrigger asChild>
+              {isLoading ? (
+                // Use the SidebarMenuSkeleton for each menu item
+                <>
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                  <SidebarMenuSkeleton />
+                </>
+              ) : (
+                <>
+                  <SidebarMenuButton>
+                    <a
+                      href="/feed"
+                      className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
+                    >
+                      <Home /> Home
+                    </a>
+                  </SidebarMenuButton>
+                  <SidebarMenuButton>
+                    <a
+                      href="/profile"
+                      className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
+                    >
+                      <User /> Profile
+                    </a>
+                  </SidebarMenuButton>
                   <SidebarMenuButton>
                     <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
-                      <Settings /> Appearance
+                      <Search /> Search
                     </span>
                   </SidebarMenuButton>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Theme settings</DialogTitle>
-                  </DialogHeader>
-                  <ModeToggle />
-                </DialogContent>
-              </Dialog>
-              <SidebarMenuButton className="lg:hidden">
-                <a
-                  href="/post/upload"
-                  className="lg:hidden w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
-                >
-                  <Plus /> Upload post
-                </a>
-              </SidebarMenuButton>
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <SidebarMenuButton>
+                        <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
+                          <Settings /> Appearance
+                        </span>
+                      </SidebarMenuButton>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Theme settings</DialogTitle>
+                      </DialogHeader>
+                      <ModeToggle />
+                    </DialogContent>
+                  </Dialog>
+                  <SidebarMenuButton className="lg:hidden">
+                    <a
+                      href="/post/upload"
+                      className="lg:hidden w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
+                    >
+                      <Plus /> Upload post
+                    </a>
+                  </SidebarMenuButton>
+                </>
+              )}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

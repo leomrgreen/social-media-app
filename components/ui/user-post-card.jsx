@@ -5,12 +5,12 @@ import EditPostBtn from "../actions/edit-post-btn";
 import DeleteBtn from "../actions/delete-btn";
 
 const UserPostCard = ({ post, owner = false }) => (
-  <Card className="w-full relative cursor-pointer rounded-none ">
+  <Card className="w-full relative cursor-pointer ">
     {post.media && (
       <img
         src={post.media.url}
         alt={post.media.alt}
-        className="aspect-square object-cover border"
+        className="aspect-square object-cover border rounded-md"
         onClick={() => {
           window.location.href = `/post/${post.id}`;
         }}
@@ -20,7 +20,7 @@ const UserPostCard = ({ post, owner = false }) => (
       <img
         src="/placeholder.png"
         alt="placeholder image"
-        className="aspect-square object-cover border"
+        className="aspect-square object-cover border rounded-md"
         onClick={() => {
           window.location.href = `/post/${post.id}`;
         }}

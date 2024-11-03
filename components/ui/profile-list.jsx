@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area"; // Import ScrollArea component
-import FollowBtn from "../actions/follow-btn";
+import { GrLinkNext } from "react-icons/gr";
 
 const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
   const [listData, setListData] = useState([]);
@@ -56,7 +56,7 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
                 listData.map((user) => (
                   <div
                     key={user.name}
-                    className="flex items-center justify-between gap-3"
+                    className="flex items-center justify-between gap-3 border-b py-2"
                   >
                     <a
                       href={`/user/${user.name}`}
@@ -68,7 +68,13 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
                       </Avatar>
                       <span>@{user.name}</span>
                     </a>
-                    <FollowBtn profile={user} />
+                    <a
+                      href={`/user/${user.name}`}
+                      className="bg-background border w-24 rounded-md font-semibold flex justify-center items-center hover:gap-3 transition-all gap-2 py-1"
+                    >
+                      Visit
+                      <GrLinkNext className="-rotate-45" />
+                    </a>
                   </div>
                 ))
               ) : (

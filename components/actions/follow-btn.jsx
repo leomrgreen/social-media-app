@@ -5,36 +5,33 @@ import { Button } from "../ui/button";
 import ProfileAPI from "@/lib/api/profileAPI";
 import * as storage from "@/lib/utilities/storage";
 
-const FollowBtn = ({ profile }) => {
+const FollowBtn = ({ profile, onFollowChange }) => {
   const api = new ProfileAPI();
   const loggedInUser = storage.load("user");
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    // Initialize followers as an empty array if undefined
     const followersList = profile.followers || [];
-
-    // Check if the logged-in user is following the profile
     const followingStatus = followersList.some(
       (follower) => follower.name === loggedInUser?.name
     );
     setIsFollowing(followingStatus);
   }, [profile, loggedInUser?.name]);
 
-  // Don't render the button if the logged-in user is the profile owner
   if (profile.name === loggedInUser?.name) {
-    return null;
+    return null; // Don't render button for the logged-in user
   }
 
   const handleFollowToggle = async () => {
     try {
       if (isFollowing) {
         await api.profile.unfollow(profile.name);
+        onFollowChange(-1); // Decrement follower count
       } else {
         await api.profile.follow(profile.name);
+        onFollowChange(1); // Increment follower count
       }
       setIsFollowing(!isFollowing); // Toggle following state
-      window.location.reload();
     } catch (error) {
       console.error("Error toggling follow status:", error);
     }

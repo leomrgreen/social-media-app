@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import postAPI from "@/lib/api/postAPI";
 import PostCard from "@/components/ui/post-card";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const PostPage = () => {
   const [post, setPost] = useState(null); // State for a single post
@@ -31,7 +32,11 @@ const PostPage = () => {
   }, [postId]); // Depend on postId to refetch if it changes
 
   if (loading) {
-    return <div>Loading...</div>; // Show a loading message
+    return (
+      <div className="flex justify-center items-center h-full">
+        <Skeleton className="w-[40rem] h-[35rem]" />
+      </div>
+    ); // Show a loading message
   }
 
   if (error) {

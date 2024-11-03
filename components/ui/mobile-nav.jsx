@@ -14,9 +14,8 @@ import SignOutBtn from "../actions/sign-out-btn";
 const MobileNav = () => {
   return (
     <>
-      <div className="fixed w-full top-0 z-50 mobile-nav p-2 flex justify-end items-center px-5">
-        <Search />
-      </div>
+      <Search className="fixed top-3 right-3 z-50 mobile-nav " />
+
       <nav className="fixed w-full p-3 bg-background mobile-nav flex bottom-0 border shadow-sm z-50">
         <ul className="flex  justify-center gap-5 items-center px-2  w-full">
           <li className="flex flex-col items-center text-xs">

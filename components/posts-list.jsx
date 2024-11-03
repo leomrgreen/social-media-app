@@ -91,8 +91,7 @@ const PostsList = () => {
       {posts.length === 0 && !loading && (
         <div className="p-2">
           <p className="text-muted-foreground text-xl px-4">
-            You are not following anyone right now. Explore interesting
-            profiles:
+            No posts found. Explore interesting profiles:
           </p>
           <TrendingUsers />
         </div>

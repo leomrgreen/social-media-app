@@ -15,6 +15,7 @@ import {
 import PostsAPI from "@/lib/api/postAPI";
 import { Button } from "../ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { Trash2Icon } from "lucide-react";
 
 const DeleteBtn = ({ postId }) => {
   const { toast } = useToast();
@@ -44,10 +45,11 @@ const DeleteBtn = ({ postId }) => {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button
-          variant="ghost"
-          className="absolute top-0 left-0 text-destructive"
+          variant="destructive"
+          className="absolute top-0 left-0 text-destructive-foreground"
         >
-          <BsTrash />
+          <span className="sm:block hidden">Delete</span>
+          <Trash2Icon />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
