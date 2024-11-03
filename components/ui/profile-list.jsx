@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useEffect, useState } from "react";
 import ProfileAPI from "@/lib/api/profileAPI";
 import {
@@ -9,21 +7,39 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area"; // Import ScrollArea component
-import { GrLinkNext } from "react-icons/gr";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
+import FollowBtn from "../actions/follow-btn";
+import { Skeleton } from "@/components/ui/skeleton";
+import * as storage from "@/lib/utilities/storage";
 
 const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
   const [listData, setListData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Initialize as false
+  const loggedInUserName = storage.load("user")?.name;
+  const [loggedInUserProfile, setLoggedInUserProfile] = useState(null);
 
   useEffect(() => {
-    if (!isOpen) return;
+    const fetchLoggedInUserProfile = async () => {
+      const data = await new ProfileAPI().profile.read(loggedInUserName);
+      setLoggedInUserProfile(data.data);
+    };
+
+    if (isOpen) {
+      fetchLoggedInUserProfile();
+    }
+  }, [isOpen, loggedInUserName]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setListData([]); // Clear data when modal is closed
+      setIsLoading(false); // Reset loading state
+      return;
+    }
 
     const fetchList = async () => {
       try {
-        setIsLoading(true);
+        setIsLoading(true); // Set loading to true when fetching starts
         const data = await new ProfileAPI().profile.read(username);
         const list =
           listType === "followers" ? data.data.followers : data.data.following;
@@ -31,7 +47,7 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
       } catch (error) {
         console.error("Failed to load list data", error);
       } finally {
-        setIsLoading(false);
+        setIsLoading(false); // Reset loading state after fetch
       }
     };
 
@@ -47,16 +63,20 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
           </DialogTitle>
         </DialogHeader>
 
-        {isLoading ? (
-          <Skeleton className="w-full h-10" />
-        ) : (
-          <ScrollArea className="w-full max-h-[30rem]">
-            {/* Scroll area with max height */}
-            <div className="space-y-3">
-              {listData.length > 0 ? (
-                listData.map((user) => (
+        <ScrollArea className="w-full max-h-[30rem]">
+          <div className="space-y-3">
+            {isLoading ? (
+              // Show loading skeleton only if the dialog is open and loading
+              <Skeleton className="w-full h-10" />
+            ) : listData.length > 0 ? (
+              listData.map((user) => {
+                const isFollowing = loggedInUserProfile?.following?.some(
+                  (followedUser) => followedUser.name === user.name
+                );
+
+                return (
                   <div
-                    key={user.name}
+                    key={user.name} // Ensure this key is unique
                     className="flex items-center justify-between gap-3 border-b py-2"
                   >
                     <Link
@@ -69,21 +89,21 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
                       </Avatar>
                       <span>@{user.name}</span>
                     </Link>
-                    <Link
-                      href={`/user/${user.name}`}
-                      className="bg-background border w-24 rounded-md font-semibold flex justify-center items-center hover:gap-3 transition-all gap-2 py-1"
-                    >
-                      Visit
-                      <GrLinkNext className="-rotate-45" />
-                    </Link>
+                    {loggedInUserProfile && (
+                      <FollowBtn
+                        profile={user}
+                        onFollowChange={() => {}}
+                        isFollowing={isFollowing} // Pass the isFollowing state here
+                      />
+                    )}
                   </div>
-                ))
-              ) : (
-                <p className="text-muted-foreground">No users found.</p>
-              )}
-            </div>
-          </ScrollArea>
-        )}
+                );
+              })
+            ) : (
+              <p className="text-muted-foreground">No users found.</p>
+            )}
+          </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
