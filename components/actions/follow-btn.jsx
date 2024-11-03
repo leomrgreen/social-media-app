@@ -11,22 +11,33 @@ const FollowBtn = ({ profile }) => {
   const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
+    // Initialize followers as an empty array if undefined
+    const followersList = profile.followers || [];
+
     // Check if the logged-in user is following the profile
-    const followingStatus = profile.followers.some(
-      (follower) => follower.name === loggedInUser.name
+    const followingStatus = followersList.some(
+      (follower) => follower.name === loggedInUser?.name
     );
     setIsFollowing(followingStatus);
-  }, [profile.followers, loggedInUser.name]);
+  }, [profile, loggedInUser?.name]);
+
+  // Don't render the button if the logged-in user is the profile owner
+  if (profile.name === loggedInUser?.name) {
+    return null;
+  }
 
   const handleFollowToggle = async () => {
-    if (isFollowing) {
-      await api.profile.unfollow(profile.name);
-    } else {
-      await api.profile.follow(profile.name);
+    try {
+      if (isFollowing) {
+        await api.profile.unfollow(profile.name);
+      } else {
+        await api.profile.follow(profile.name);
+      }
+      setIsFollowing(!isFollowing); // Toggle following state
+      window.location.reload();
+    } catch (error) {
+      console.error("Error toggling follow status:", error);
     }
-    // Update the following status and refresh the page to show changes
-    setIsFollowing(!isFollowing);
-    window.location.reload();
   };
 
   return (

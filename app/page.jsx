@@ -12,10 +12,16 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import * as storage from "@/lib/utilities/storage";
 
 export default function Home() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const isUserLoggedIn = storage.load("token");
+
+  if (isUserLoggedIn) {
+    window.location.href = "/feed";
+  }
 
   return (
     <div className="min-h-screen flex flex-col justify-center w-full max-w-[50rem] space-y-4 mx-auto">

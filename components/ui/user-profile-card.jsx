@@ -8,12 +8,17 @@ import FollowBtn from "../actions/follow-btn";
 import { Skeleton } from "./skeleton";
 import * as storage from "@/lib/utilities/storage";
 import EditBtn from "../actions/edit.btn";
+import ProfileListModal from "./profile-list";
 
 const UserProfileCard = ({ username }) => {
   const [profileData, setProfileData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const loggedInUser = storage.load("user");
   const loggedInUserName = loggedInUser?.name;
+
+  // Modal state for followers/following
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("followers"); // "followers" or "following"
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -31,42 +36,63 @@ const UserProfileCard = ({ username }) => {
     fetchProfile();
   }, [username]);
 
+  const openModal = (type) => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
   if (isLoading) return <Skeleton className="w-3/4 h-[12rem] mx-auto" />;
 
   return (
-    <Card className="w-full max-w-[35rem] mx-auto border grid">
-      <CardHeader className="flex flex-col sm:flex-row justify-around mx-auto items-center gap-5 w-full">
-        <span className="flex flex-col items-center">
-          <Avatar>
-            <AvatarImage src={profileData.avatar.url} />
-            <AvatarFallback>{profileData.name[0]}</AvatarFallback>
-          </Avatar>
-          <span>@{profileData.name}</span>
-        </span>
+    <>
+      <Card className="w-full max-w-[35rem] mx-auto border grid">
+        <CardHeader className="flex flex-col sm:flex-row justify-around mx-auto items-center gap-5 w-full">
+          <span className="flex flex-col items-center">
+            <Avatar>
+              <AvatarImage src={profileData.avatar.url} />
+              <AvatarFallback>{profileData.name[0]}</AvatarFallback>
+            </Avatar>
+            <span>@{profileData.name}</span>
+          </span>
 
-        <span className="flex flex-col gap-2">
-          <div className="flex gap-3 text-muted-foreground">
-            <p className="text-nowrap text-sm">
-              {profileData._count.posts} Posts
-            </p>
-            <p className="text-nowrap text-sm">
-              {profileData.followers.length} Followers
-            </p>
-            <p className="text-nowrap text-sm">
-              {profileData.following.length} Following
-            </p>
-          </div>
-          {loggedInUserName === profileData.name ? (
-            <EditBtn /> // Show edit button if the logged-in user is the profile owner
-          ) : (
-            <FollowBtn profile={profileData} /> // Otherwise, show follow button
-          )}
-        </span>
-      </CardHeader>
-      <CardContent className="flex text-muted-foreground">
-        {profileData.bio}
-      </CardContent>
-    </Card>
+          <span className="flex flex-col gap-2">
+            <div className="flex gap-3 text-muted-foreground">
+              <p className="text-nowrap text-sm">
+                {profileData._count.posts} Posts
+              </p>
+              <button
+                onClick={() => openModal("followers")}
+                className="text-nowrap text-sm"
+              >
+                {profileData.followers.length} Followers
+              </button>
+              <button
+                onClick={() => openModal("following")}
+                className="text-nowrap text-sm"
+              >
+                {profileData.following.length} Following
+              </button>
+            </div>
+            {loggedInUserName === profileData.name ? (
+              <EditBtn /> // Show edit button if the logged-in user is the profile owner
+            ) : (
+              <FollowBtn profile={profileData} /> // Otherwise, show follow button
+            )}
+          </span>
+        </CardHeader>
+        <CardContent className="flex text-muted-foreground">
+          {profileData.bio}
+        </CardContent>
+      </Card>
+
+      {/* Modal for Followers/Following */}
+      <ProfileListModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        username={username}
+        listType={modalType}
+      />
+    </>
   );
 };
 
