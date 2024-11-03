@@ -14,30 +14,26 @@ import {
 } from "../ui/alert-dialog";
 import PostsAPI from "@/lib/api/postAPI";
 import { Button } from "../ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { Trash2Icon } from "lucide-react";
 
 const DeleteBtn = ({ postId }) => {
-  const { toast } = useToast();
   const handleDelete = async () => {
     try {
       await PostsAPI.post.delete(postId); // Call the delete method with the postId
-      toast({
-        title: "Post deleted",
+      toast.success("Post deleted", {
         description: "The post was successfully deleted.",
-        status: "success",
+        position: "top-center",
       });
     } catch (error) {
       console.error("Failed to delete post:", error);
-      toast({
-        title: "Deletion failed",
+      toast.error("Deletion failed", {
         description: "There was an error deleting the post. Please try again.",
-        status: "error",
       });
     } finally {
       setTimeout(() => {
         location.reload();
-      }, "1000");
+      }, 1000);
     }
   };
 

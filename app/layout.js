@@ -4,7 +4,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarRight } from "@/components/sidebar-right";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import MobileNav from "@/components/ui/mobile-nav";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata = {
   title: "Social Media App",

@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import * as storage from "@/lib/utilities/storage";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
-import { useToast } from "@/hooks/use-toast";
+import { toast } from "sonner"; // Import Sonner's toast
 import { onUpdateProfile } from "@/lib/api/updateProfile";
 import ProfileAPI from "@/lib/api/profileAPI";
 
@@ -16,7 +16,6 @@ const UpdateProfile = ({ closeDialog }) => {
   const [bio, setBio] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
   const [avatarAlt, setAvatarAlt] = useState("");
-  const { toast } = useToast();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -54,18 +53,15 @@ const UpdateProfile = ({ closeDialog }) => {
 
     try {
       await onUpdateProfile(e, updateData);
-      toast({
-        title: "Profile updated",
+      toast.success("Profile updated", {
         description: "Your profile has been updated.",
-        status: "success",
+        position: "top-center",
       });
       closeDialog(); // Close dialog after successful submission
     } catch (error) {
       console.error("Failed to update profile:", error);
-      toast({
-        title: "Update failed",
+      toast.error("Update failed", {
         description: "An error occurred. Please try again.",
-        status: "error",
       });
     }
   };
