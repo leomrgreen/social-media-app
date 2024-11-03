@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarRight } from "@/components/sidebar-right";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import MobileNav from "@/components/ui/mobile-nav";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata = {
   title: "Social Media App",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
             <SidebarRight />
           </SidebarProvider>
           <MobileNav />
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

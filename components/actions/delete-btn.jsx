@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { BsTrash } from "react-icons/bs";
 import {
@@ -13,13 +14,29 @@ import {
 } from "../ui/alert-dialog";
 import PostsAPI from "@/lib/api/postAPI";
 import { Button } from "../ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const DeleteBtn = ({ postId }) => {
+  const { toast } = useToast();
   const handleDelete = async () => {
     try {
       await PostsAPI.post.delete(postId); // Call the delete method with the postId
+      toast({
+        title: "Post deleted",
+        description: "The post was successfully deleted.",
+        status: "success",
+      });
     } catch (error) {
       console.error("Failed to delete post:", error);
+      toast({
+        title: "Deletion failed",
+        description: "There was an error deleting the post. Please try again.",
+        status: "error",
+      });
+    } finally {
+      setTimeout(() => {
+        location.reload();
+      }, "1000");
     }
   };
 

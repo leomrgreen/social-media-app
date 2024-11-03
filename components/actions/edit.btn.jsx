@@ -14,6 +14,8 @@ import UpdateProfile from "../update-profile";
 const EditBtn = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  const closeDialog = () => setIsOpen(false);
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -26,7 +28,7 @@ const EditBtn = () => {
           <DialogTitle>Edit profile</DialogTitle>
           <DialogClose />
         </DialogHeader>
-        <UpdateProfile />
+        <UpdateProfile closeDialog={closeDialog} />
       </DialogContent>
     </Dialog>
   );
