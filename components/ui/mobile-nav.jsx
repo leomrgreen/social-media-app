@@ -10,6 +10,7 @@ import {
 } from "./dialog";
 import ModeToggle from "../theme/mode-toggle";
 import SignOutBtn from "../actions/sign-out-btn";
+import Link from "next/link";
 
 const MobileNav = () => {
   return (
@@ -19,26 +20,26 @@ const MobileNav = () => {
       <nav className="fixed w-full p-3 bg-background mobile-nav flex bottom-0 border shadow-sm z-50">
         <ul className="flex  justify-center gap-5 items-center px-2  w-full">
           <li className="flex flex-col items-center text-xs">
-            <a href="/feed">
+            <Link href="/feed">
               <Home />
               <span className="text-muted-foreground sr-only">Home</span>
-            </a>
+            </Link>
           </li>
           <Separator orientation="vertical" />
 
           <li className="flex flex-col items-center text-xs">
-            <a href="/profile">
+            <Link href="/profile">
               <User />
               <span className="text-muted-foreground sr-only">Profile</span>
-            </a>
+            </Link>
           </li>
           <Separator orientation="vertical" />
 
           <li className="flex flex-col items-center text-xs">
-            <a href="/post/upload">
+            <Link href="/post/upload">
               <Plus />
               <span className="text-muted-foreground sr-only">Upload</span>
-            </a>
+            </Link>
           </li>
           <Separator orientation="vertical" />
 

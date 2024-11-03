@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/dialog";
 import ModeToggle from "./theme/mode-toggle";
 import { Skeleton } from "./ui/skeleton";
+import Link from "next/link";
 
 const loggedInUser = storage.load("user");
 
@@ -108,20 +109,20 @@ export function AppSidebar() {
               ) : (
                 <>
                   <SidebarMenuButton>
-                    <a
+                    <Link
                       href="/feed"
                       className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
                     >
                       <Home /> Home
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                   <SidebarMenuButton>
-                    <a
+                    <Link
                       href="/profile"
                       className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
                     >
                       <User /> Profile
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                   <SidebarMenuButton>
                     <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
@@ -144,12 +145,12 @@ export function AppSidebar() {
                     </DialogContent>
                   </Dialog>
                   <SidebarMenuButton className="lg:hidden">
-                    <a
+                    <Link
                       href="/post/upload"
                       className="lg:hidden w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground"
                     >
                       <Plus /> Upload post
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </>
               )}

@@ -12,6 +12,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area"; // Import ScrollArea component
 import { GrLinkNext } from "react-icons/gr";
+import Link from "next/link";
 
 const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
   const [listData, setListData] = useState([]);
@@ -58,7 +59,7 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
                     key={user.name}
                     className="flex items-center justify-between gap-3 border-b py-2"
                   >
-                    <a
+                    <Link
                       href={`/user/${user.name}`}
                       className="flex items-center gap-3"
                     >
@@ -67,14 +68,14 @@ const ProfileListModal = ({ isOpen, onClose, username, listType }) => {
                         <AvatarFallback>{user.name[0]}</AvatarFallback>
                       </Avatar>
                       <span>@{user.name}</span>
-                    </a>
-                    <a
+                    </Link>
+                    <Link
                       href={`/user/${user.name}`}
                       className="bg-background border w-24 rounded-md font-semibold flex justify-center items-center hover:gap-3 transition-all gap-2 py-1"
                     >
                       Visit
                       <GrLinkNext className="-rotate-45" />
-                    </a>
+                    </Link>
                   </div>
                 ))
               ) : (

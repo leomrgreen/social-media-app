@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col justify-center w-full max-w-[50rem] space-y-4 mx-auto sm:px-0 px-5">
       <h1 className="text-4xl sm:text-5xl text-start">
-        Welcome to Noroff's official social media platform
+        Welcome to Lorem Ipsum official social media platform
       </h1>
       <h2 className="text-2xl text-muted-foreground">
         Get started by signing up

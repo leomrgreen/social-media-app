@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { Skeleton } from "./skeleton";
 import { Verified } from "lucide-react";
 import { GrLinkNext } from "react-icons/gr";
+import Link from "next/link";
 
 const TrendingUsers = () => {
   const api = new ProfileAPI();
@@ -67,13 +68,13 @@ const TrendingUsers = () => {
           <span className="text-muted-foreground">
             {user._count.followers} followers
           </span>
-          <a
+          <Link
             href={`/user/${user.name}`}
             className="bg-background border w-1/2 rounded-md font-semibold flex justify-center items-center hover:gap-3 transition-all gap-2 py-1"
           >
             Visit
             <GrLinkNext className="-rotate-45" />
-          </a>
+          </Link>
         </li>
       ))}
     </ul>

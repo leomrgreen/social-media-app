@@ -13,6 +13,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import TrendingUsers from "./ui/trending";
+import Link from "next/link";
 
 export function SidebarRight({ ...props }) {
   const [isUser, setIsUser] = React.useState(false);
@@ -53,9 +54,9 @@ export function SidebarRight({ ...props }) {
           <SidebarMenuItem>
             <SidebarMenuButton>
               <Plus />
-              <a href="/post/upload" className="w-full lg:flex hidden">
+              <Link href="/post/upload" className="w-full lg:flex hidden">
                 Upload post
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
