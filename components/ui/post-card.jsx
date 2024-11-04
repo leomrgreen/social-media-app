@@ -5,6 +5,8 @@ import timeSince from "@/lib/utilities/getDate";
 import { Card } from "./card";
 import LikeBtn from "../actions/like-btn";
 import * as storage from "@/lib/utilities/storage";
+import postsAPI from "@/lib/api/postAPI";
+import CommentDialog from "../actions/comment";
 
 const loggedInUser = storage.load("user");
 const userName = loggedInUser?.name;
@@ -82,7 +84,8 @@ const PostCard = ({
             <span>{post._count.reactions}</span>
           </p>
           <p className="text-muted-foreground flex items-center gap-1">
-            <MessageCircle /> {post._count.comments}
+            <CommentDialog postId={post.id} api={postsAPI} />
+            {/* <span>{post._count.comments}</span> */}
           </p>
         </div>
       </div>

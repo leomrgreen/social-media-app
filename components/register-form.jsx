@@ -36,14 +36,18 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="w-full grid gap-3">
-      <Label htmlFor="name">Your name</Label>
+      <Label htmlFor="name">Username</Label>
       <Input
         type="text"
         name="name"
         id="name"
         value={formData.name}
         onChange={handleChange}
-        placeholder="Full Name"
+        placeholder="Pick a username"
+        pattern="^[\w]+$"
+        maxLength={20}
+        required
+        title="Name should contain only letters and numbers, no spaces or special characters."
       />
       <Label htmlFor="email">Your email address</Label>
       <Input
@@ -53,12 +57,17 @@ const RegisterForm = () => {
         value={formData.email}
         onChange={handleChange}
         placeholder="Email"
+        pattern="^[\w\-.]+@(stud\.)?noroff\.no$"
+        required
+        title="Email should be a valid Noroff mail"
       />
       <Label htmlFor="password">Your password</Label>
       <Input
         type="password"
         name="password"
         id="password"
+        minLength={8}
+        title="Password must be at least 8 characters long."
         value={formData.password}
         onChange={handleChange}
         placeholder="Enter your password"

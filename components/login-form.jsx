@@ -2,12 +2,17 @@
 
 import NoroffAPI from "@/lib/api/authAPI";
 import { useState } from "react";
+import { FiEyeOff, FiEye } from "react-icons/fi";
+
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Button } from "./ui/button";
+import LoadingButton from "./ui/load-btn";
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [isLoading, setIsLoading] = useState(false);
   const api = new NoroffAPI();
 
   const handleChange = (e) => {
@@ -21,13 +26,14 @@ const LoginForm = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
       const response = await api.auth.login(formData);
-      console.log("Login successful:", response);
-      alert(`Login successful for ${response.data.name}`);
-      window.location.href = "/feed"; // redirect to feed after login
     } catch (error) {
       console.error("Login failed:", error);
       alert(error.message || "Login failed, please try again.");
+    } finally {
+      setIsLoading(false);
+      window.location.href = "/feed"; // redirect to feed after login
     }
   };
 
@@ -42,16 +48,32 @@ const LoginForm = () => {
         onChange={handleChange}
         placeholder="Email"
       />
+
       <Label htmlFor="password">Your password</Label>
-      <Input
-        type="password"
-        name="password"
-        id="password"
-        value={formData.password}
-        onChange={handleChange}
-        placeholder="Enter your password"
-      />
-      <Button type="submit">Login</Button>
+      <div className="relative">
+        <Input
+          type={showPassword ? "text" : "password"}
+          name="password"
+          id="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Enter your password"
+        />
+        {/* Toggle button */}
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-3 top-1/2 transform -translate-y-1/2"
+        >
+          {showPassword ? <FiEyeOff /> : <FiEye />}
+        </button>
+      </div>
+
+      {isLoading ? (
+        <LoadingButton message="Login" />
+      ) : (
+        <Button type="submit">Login</Button>
+      )}
     </form>
   );
 };
