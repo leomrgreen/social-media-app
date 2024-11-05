@@ -1,18 +1,35 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { onCreatePost } from "@/lib/api/createPost";
 import { Card } from "./ui/card";
 import { Label } from "./ui/label";
 import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import LoadingButton from "./ui/load-btn";
 
 const CreatePostForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsLoading(true);
+
+    try {
+      await onCreatePost(event);
+      // Reset form or display success message if needed
+    } catch (error) {
+      console.error("Error creating post:", error);
+    } finally {
+      setIsLoading(false); // Reset loading state whether success or error
+    }
+  };
+
   return (
     <Card className="p-6 max-w-[50rem] mx-auto w-full">
       <h1 className="text-5xl pb-10">Upload post</h1>
 
-      <form onSubmit={onCreatePost} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-1">
           <Label htmlFor="title">Title</Label>
           <Input
@@ -64,9 +81,14 @@ const CreatePostForm = () => {
           />
         </div>
 
-        <Button type="submit" className="mt-4">
-          Create Post
-        </Button>
+        {/* Conditionally render LoadingButton or Button based on isLoading */}
+        {isLoading ? (
+          <LoadingButton message="Creating Post..." />
+        ) : (
+          <Button type="submit" className="mt-4">
+            Create Post
+          </Button>
+        )}
       </form>
     </Card>
   );

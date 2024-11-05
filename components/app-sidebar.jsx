@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import ProfileAPI from "@/lib/api/profileAPI";
-import { Home, Plus, Search, Settings, User } from "lucide-react";
+import { Home, Plus, Settings, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -29,6 +29,7 @@ import {
 import ModeToggle from "./theme/mode-toggle";
 import { Skeleton } from "./ui/skeleton";
 import Link from "next/link";
+import Search from "./actions/search";
 
 const loggedInUser = storage.load("user");
 
@@ -126,7 +127,7 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                   <SidebarMenuButton>
                     <span className="w-full flex items-center gap-2 text-lg text-muted-foreground hover:text-foreground">
-                      <Search /> Search
+                      <Search />
                     </span>
                   </SidebarMenuButton>
                   <Dialog>

@@ -1,4 +1,4 @@
-import { Home, LogOut, Plus, Search, Settings, User } from "lucide-react";
+import { Home, Plus, Settings, User } from "lucide-react";
 import React from "react";
 import { Separator } from "./separator";
 import {
@@ -11,13 +11,16 @@ import {
 import ModeToggle from "../theme/mode-toggle";
 import SignOutBtn from "../actions/sign-out-btn";
 import Link from "next/link";
+import Search from "../actions/search";
 
 const MobileNav = () => {
   return (
     <>
-      <Search className="fixed top-3 right-3 z-50 mobile-nav " />
+      <span className="fixed top-3 right-3 z-50 mobile-nav ">
+        <Search />
+      </span>
 
-      <nav className="fixed w-full p-3 bg-background mobile-nav flex bottom-0 border shadow-sm z-50">
+      <nav className="fixed w-full p-3 bg-background mobile-nav flex bottom-0 border-t shadow-sm z-50">
         <ul className="flex  justify-center gap-5 items-center px-2  w-full">
           <li className="flex flex-col items-center text-xs">
             <Link href="/feed">

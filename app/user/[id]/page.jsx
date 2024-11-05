@@ -36,7 +36,7 @@ const Userpage = () => {
       <section className="max-w-[70rem] w-full mx-auto px-5 flex flex-col gap-2 pt-10">
         <UserProfileCard username={username} />
       </section>
-      <section className="max-w-[70rem] w-full mx-auto px-5 mt-2">
+      <section className="max-w-[70rem] w-full mx-auto px-5 mt-2 pb-20">
         {isLoading ? (
           <Skeleton className="w-full h-screen" />
         ) : (

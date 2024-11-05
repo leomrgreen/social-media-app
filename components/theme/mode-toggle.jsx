@@ -3,12 +3,14 @@
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import React from "react";
-import { set } from "date-fns";
+import { Switch } from "../ui/switch";
 
 const ModeToggle = () => {
-  const { setTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
+
   return (
     <div className="grid grid-cols-2 gap-2 items-center">
+      {/* Light Theme Option */}
       <div
         className="grid text-center gap-2 cursor-pointer hover:bg-muted py-2 rounded-lg transition-colors"
         onClick={() => setTheme("light")}
@@ -21,10 +23,16 @@ const ModeToggle = () => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center gap-2">
-          Light <span className="dark:hidden block"> (current)</span>
+        <div className="flex justify-center gap-2 items-center">
+          <span>Light</span>
+          <Switch
+            checked={resolvedTheme === "light"}
+            onClick={() => setTheme("light")}
+          />
         </div>
       </div>
+
+      {/* Dark Theme Option */}
       <div
         className="grid text-center gap-2 cursor-pointer hover:bg-muted py-2 rounded-lg transition-colors"
         onClick={() => setTheme("dark")}
@@ -37,8 +45,12 @@ const ModeToggle = () => {
             ))}
           </div>
         </div>
-        <div className="flex justify-center gap-2">
-          Dark <span className="dark:block hidden"> (current)</span>
+        <div className="flex justify-center gap-2 items-center">
+          <span>Dark</span>
+          <Switch
+            checked={resolvedTheme === "dark"}
+            onClick={() => setTheme("dark")}
+          />
         </div>
       </div>
     </div>

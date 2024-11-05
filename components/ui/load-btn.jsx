@@ -4,7 +4,7 @@ import { RiLoader2Line } from "react-icons/ri";
 
 const LoadingButton = ({ message }) => {
   return (
-    <Button disabled>
+    <Button disabled className="w-full">
       <RiLoader2Line
         className="animate-spin
       "
