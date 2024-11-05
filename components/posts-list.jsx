@@ -62,7 +62,7 @@ const PostsList = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div className="max-w-[50rem] w-full mx-auto overflow-x-hidden pb-10">
+    <div className="max-w-[50rem] w-full mx-auto pb-10">
       {/* Toggle Button */}
       <div className="flex justify-center sticky top-0 z-50">
         <button
