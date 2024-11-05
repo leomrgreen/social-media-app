@@ -15,11 +15,6 @@ import Search from "../actions/search";
 import * as storage from "@/lib/utilities/storage";
 
 const MobileNav = () => {
-  const token = storage.load("token");
-  console.log(token);
-
-  if (!token) return null;
-
   return (
     <>
       <span className="fixed top-3 right-3 z-50 mobile-nav ">
