@@ -97,7 +97,7 @@ const PostsList = () => {
         </div>
       )}
 
-      <div className="grid sm:border-x overflow-x-hidden">
+      <div className="grid lg:border-x overflow-x-hidden">
         {posts.map((post, index) => (
           <PostCard key={`${post.id}-${index}`} post={post} />
         ))}

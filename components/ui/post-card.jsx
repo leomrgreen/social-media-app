@@ -77,7 +77,7 @@ const PostCard = ({
         />
       )}
       <div className="flex justify-between">
-        <h3 className="flex max-w-[30ch] truncate break-words text-wrap">
+        <h3 className="flex max-w-[50ch] break-words text-wrap">
           {post.title}
         </h3>
         <div className="flex gap-3 items-center">

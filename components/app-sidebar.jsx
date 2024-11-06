@@ -72,7 +72,7 @@ export function AppSidebar() {
               </div>
             ) : (
               profileData && (
-                <>
+                <span className="flex items-center gap-2">
                   <Avatar>
                     <AvatarImage src={profileData.avatar.url} />
                     <AvatarFallback>
@@ -85,7 +85,7 @@ export function AppSidebar() {
                       {profileData.email}
                     </span>
                   </div>
-                </>
+                </span>
               )
             )}
           </span>
