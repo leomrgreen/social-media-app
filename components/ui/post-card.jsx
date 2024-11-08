@@ -77,7 +77,7 @@ const PostCard = ({
         />
       )}
       <div className="flex justify-between">
-        <h3 className="flex max-w-[50ch] break-words text-wrap">
+        <h3 className="flex max-w-[40ch] truncate break-words text-wrap">
           {post.title}
         </h3>
         <div className="flex gap-3 items-center">
@@ -91,7 +91,7 @@ const PostCard = ({
           </p>
         </div>
       </div>
-      {body && <p className="text-muted-foreground">{post.body}</p>}
+      {body && <p className="text-muted-foreground break-words">{post.body}</p>}
       <ul className="flex gap-2 items-center">
         {post.tags.map((tag, idx) => (
           <li key={idx} className={`${tags ? "flex" : "hidden"} list-none`}>
